@@ -3,6 +3,42 @@
 */
 
 #include "kmeans.h"
+// ------------------ PRIVATE DECL ----------------------
+/**
+ * @brief Compute the given distance type between two vectors
+ * @param config the configuration instance
+ * @param a the first vector
+ * @param b the second vector
+ * @return the euclidean distance
+ */
+static float distance(kmeans_config *config, float *a, float *b);
+
+/**
+ * @brief Initialize clusters with given initialization method
+ * @param config the configuration instance
+ */
+static void initialize_clusters(kmeans_config *config);
+
+/**
+ * @brief Assign each point to the nearest cluster
+ * @param config the configuration instance
+ */
+static void assign_points_to_cluster(kmeans_config *config);
+
+/**
+ * @brief Updates the medoid of each cluster using the selected method
+ * @param config the configuration instance
+ */
+static void update_centroids(kmeans_config *config);
+
+/**
+ * @brief Compute the silhouette score for the resulting clusters
+ * @param config the configuration instance
+ * @return the average score
+ */
+static float silhouette_score(kmeans_config *config);
+
+// ------------------ PRIVATE IMPL -----------------------
 
 static void initialize_clusters(kmeans_config *config) {
 
@@ -282,6 +318,8 @@ static float silhouette_score(kmeans_config *config) {
     }
     return s / (float) config->num_objs;
 }
+
+// -------------------------- PUBLIC IMPL ---------------------------
 
 void print_clusters(kmeans_config *config) {
     for(unsigned int i = 0; i < config->k; i++) {
